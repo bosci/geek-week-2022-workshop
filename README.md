@@ -37,25 +37,53 @@ https://github.com/crytic/solc-select
     - Learn how to use a symbolic execution engine to discover how to destroy a contract
 
 # Commands
+## clean, build, test
 ```
-dev # clean, build, test
+make dev
+```
 
-install # install foundry deps for testing
+## install foundry deps for testing
+```
+make install 
+```
 
-clean # clean artifacts
+## clean artifacts
+```
+make clean
+```
 
-build # compile contract
+## compile contract
+```
+make build
+```
 
-t # test
+## run tests
+```
+make t
+```
 
-g # start ganache
+## start ganache
+```
+make g 
+```
 
-create # deploy to ganache chain
+## deploy to ganache chain
+```
+make create
+```
 
-myth # run symbolic execution example
+## run symbolic execution example
+```
+make myth 
+```
 
-deploy_suicide # destroy Suicide contract
+## destroy Suicide contract
+```
+make deploy_suicide
+```
 
-call # invoke arbitrary command on contract
+## invoke arbitrary command on contract
+```
+make call 
 ```
 
