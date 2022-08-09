@@ -4,4 +4,4 @@ out = 'out'
 libs = ['lib']
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
-fuzz_runs = 256 #256
+fuzz_runs = 256 #can customize this to set the amount of fuzz runs by default

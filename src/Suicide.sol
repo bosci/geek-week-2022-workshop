@@ -1,3 +1,4 @@
+//@author: gacwr.org
 pragma solidity ^0.8.13;
 
 contract Suicide {
@@ -8,11 +9,10 @@ contract Suicide {
         initialized = 1;
     }
 
-    function run(uint256 input) external {
+    function run() external {
         if (initialized == 0) {
             return;
         }
-
         selfdestruct(payable(msg.sender));
     }
 }
