@@ -53,5 +53,9 @@ g # start ganache
 create # deploy to ganache chain
 
 myth # run symbolic execution example
+
+deploy_suicide # destroy Suicide contract
+
+call # invoke arbitrary command on contract
 ```
 
