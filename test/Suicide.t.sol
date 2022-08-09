@@ -22,15 +22,15 @@ contract SuicideTest is Test {
         c.run();
     }
 
-    // function testDestroy(uint256 i) public {
-    //     bytes memory codeBefore = address(c).code;
-    //     string memory stringBefore = string(abi.encodePacked(codeBefore));
-    //     c.init();
-    //     c.run(i);
-    //     bytes memory codeAfter = address(c).code;
-    //     string memory stringAfter = string(abi.encodePacked(codeAfter));
-    //     assertEq(stringBefore, "");
-    //     assertEq(stringAfter, "");
-    // }
+    function testDestroy(uint256 i) public {
+        bytes memory codeBefore = address(c).code;
+        string memory stringBefore = string(abi.encodePacked(codeBefore));
+        c.init();
+        c.run();
+        bytes memory codeAfter = address(c).code;
+        string memory stringAfter = string(abi.encodePacked(codeAfter));
+        // assertEq(stringBefore, "");
+        // assertEq(stringAfter, "");
+    }
 
 }

